@@ -1,2 +1,4 @@
 # 忽略data目录
 data
+# 忽略pyc文件
+*.pyc
