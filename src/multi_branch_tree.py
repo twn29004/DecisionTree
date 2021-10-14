@@ -7,8 +7,6 @@ Describe:
     (1) 熵
     (2) gini指数
     (3) 分类错误率
-使用四种评价指标比较决策树的分类性能：
-    (1) 
 '''
 
 from math import log
