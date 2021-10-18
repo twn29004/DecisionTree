@@ -1,24 +1,27 @@
 import copy
 import time
 
-# from binary_tree import create_tree, classify
-from multi_branch_tree import create_tree, classify
+from binary_tree import create_tree, classify
+# from multi_branch_tree import create_tree, classify
 from metric import output_fusion_matrix
 from metric import output_classification_report as output_cls_report
 from plottree import createPlot
 
 # from process_data import read_iris_data as read_data
 # from process_data import read_wine_data as read_data
-from process_data import read_bank_data as read_data
+# from process_data import read_wine_quality_data as read_data
+# from process_data import read_bank_data as read_data
 # from process_data import read_car_data as read_data
 # from process_data import read_abalone_data as read_data
 
 # from process_data import read_diagnosis_data as read_data
 # from process_data import read_balance_scale_data as read_data
-# from process_data import read_breast_cancer_data as read_data
+from process_data import read_breast_cancer_data as read_data
 # from process_data import read_chees_data as read_data
 
 # from process_data import read_adult_data as read_data
+# from process_data import read_urban_data as read_data
+# from process_data import read_glass_data as read_data
 
 def other_transform(dataset):
     new_dataset = []
@@ -32,15 +35,13 @@ def other_transform(dataset):
 
 if __name__ == "__main__":
     train_dataset, test_dataset, attributes = read_data()
-    # train_dataset = other_transform(train_dataset)
-    # test_dataset = other_transform(test_dataset)
     print(train_dataset[0])
     attributes_tmp = copy.deepcopy(attributes)
     train_dataset_tmp = copy.deepcopy(train_dataset)
 
     create_tree_start_time = time.process_time()
 
-    decision_tree = create_tree(train_dataset_tmp, attributes_tmp, criterion="entrophy")
+    decision_tree = create_tree(train_dataset_tmp, attributes_tmp, criterion="gini")
 
     create_tree_end_time = time.process_time()
     print("构建决策树的耗时为： ", (create_tree_end_time - create_tree_start_time), "s")

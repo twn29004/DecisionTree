@@ -119,10 +119,14 @@ def read_wine_data(path="./data/wine/wine.csv"):
 def read_wine_quality_data(path="./data/winequality/winequality-{}.csv", type="white"):
     path = path.format(type)
     dataset, attributes = read_csv(path,splitflag=';')
-    labels = using_idx_split_dataset(dataset, [0])
-    dataset = using_idx_split_dataset(dataset, range(1, len(dataset[0])))
-    dataset = transfrom_str_to_float(dataset)
-    combine_dataset(dataset, labels)
+    dataset = transfrom_str_to_float(dataset, range(len(dataset[0])))
+    for idx, data in enumerate(dataset):
+        if data[-1] <=5:
+            dataset[idx][-1] = 0
+        elif data[-1] <= 8:
+            dataset[idx][-1] = 1
+        else:
+            dataset[idx][-1] = 2 
     train_dataset, test_dataset = split_train_test(dataset)
     return train_dataset, test_dataset, attributes
 
@@ -199,6 +203,31 @@ def read_breast_cancer_data(path="./data/breast-cancer/breast-cancer.csv"):
 
 def read_chees_data(path="./data/chess/krkopt.csv"):
     dataset, attributes = read_csv(path)
+    train_dataset, test_dataset = split_train_test(dataset)
+    return train_dataset, test_dataset, attributes
+
+def read_urban_data(path="./data/urban/urban.csv"):
+    dataset, attributes = read_csv(path, splitflag=';')
+    dataset = transfrom_str_to_float(dataset, range(len(dataset[0]) - 1))
+    for idx, data in enumerate(dataset):
+        tmp = data[-1].split(',')[0]
+        tmp = int(tmp)
+        if tmp < 10:
+            dataset[idx][-1] = 0
+        elif tmp < 15:
+            dataset[idx][-1] = 1
+        else:
+            dataset[idx][-1] = 2
+    train_dataset, test_dataset = split_train_test(dataset)
+    return train_dataset, test_dataset, attributes
+
+
+def read_glass_data(path="./data/glass/glass.csv"):
+    dataset, attributes = read_csv(path)
+    dataset = transfrom_str_to_float(dataset, range(len(dataset[0])))
+    # 去除id列
+    for data in dataset:
+        data = data[1:]
     train_dataset, test_dataset = split_train_test(dataset)
     return train_dataset, test_dataset, attributes
 
